@@ -1,0 +1,11 @@
+version: '3'
+services:
+  uagent:
+    image: golang:1.12.6-stretch
+    environment:
+      - GO111MODULE=on
+      - CGO_ENABLED=0
+    command: perl -e sleep
+    working_dir: /go/src/github.com/pattfy/useragent
+    volumes:
+      - .:/go/src/github.com/pattfy/useragent
