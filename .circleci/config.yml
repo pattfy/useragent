@@ -1,0 +1,51 @@
+version: 2.1
+
+workflows:
+  version: 2.1
+  test:
+    jobs:
+      - build_1_12_6
+      - build_1_13_1
+
+executors:
+  golang_1_12_6:
+    docker:
+      - image: circleci/golang:1.12.6
+    working_directory: /go/src/github.com/pattfy/useragent
+    environment:
+      GO111MODULE: 'on'
+      CGO_ENABLED: '0'
+  golang_1_13_1:
+    docker:
+      - image: circleci/golang:1.13.1
+    working_directory: /go/src/github.com/pattfy/useragent
+    environment:
+      GO111MODULE: 'on'
+      CGO_ENABLED: '0'
+
+commands:
+  install_tools:
+    steps:
+      - run: make tools
+  check_format:
+    steps:
+      - run: make
+  test_code:
+    steps:
+      - run: go test -cover -v ./...
+
+jobs:
+  build_1_12_6:
+    executor: golang_1_12_6
+    steps:
+      - checkout
+      - install_tools
+      - test_code
+      - check_format
+  build_1_13_1:
+    executor: golang_1_13_1
+    steps:
+      - checkout
+      - install_tools
+      - test_code
+      - check_format
