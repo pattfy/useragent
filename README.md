@@ -8,7 +8,7 @@ UserAgent is a Golang library that parses HTTP User-Agent.
 go get -u github.com/pattfy/useragent
 ```
 
-## Struct
+## Struct and Interface
 
 ```golang
 // UserAgent
@@ -20,6 +20,58 @@ type UserAgent struct {
     Browser  browser.Browser
 }
 ```
+
+### bot.Bot
+- `Name` (field)
+Name of the bot
+- `IsBot()`
+IsBot check whether the User-Agent is identified as a bot.
+- `IsSearchEngine()`
+IsSearchEngine check whether the User-Agent is identified as a search engine.
+
+### browser.Browser
+- `ID()`
+return the ID of the browser(lower-case).
+- `Name()`
+return the name of the browser.
+- `FullVersion()`
+return the full version of the browser.
+- `Version()`
+return the major version of the browser.
+
+### device.Device
+Now such devices are availaable.
+- iPad
+- iPhone
+- Kindle
+- Surface
+
+#### Interface
+- `ID()`
+return the ID of the device(lower-case).
+- `Name()`
+return the name of the device.
+- `IsMobile()`
+check whether the User-Agent is a mobile device.
+- `IsTablet()`
+check whether the User-Agent is a tablet device.
+
+### platform.Platform
+Now such platforms are available.
+- Android
+- iOS
+- Linux
+- Mac
+- Windows
+- Windows Phone
+
+#### Interface
+- `ID()`
+return the ID of the platform(lower-case).
+- `Name()`
+return the name of the platform.
+- `Version()`
+return the version of the platform.
 
 ## Usage
 
