@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/pattfy/useragent"
+	"github.com/stretchr/testify/assert"
 )
 
 var cases = []struct {
@@ -846,6 +847,23 @@ var cases = []struct {
 		browserFullVersion: "67.0.3396.87",
 		browserVersion:     "67",
 	},
+	{
+		desc:               "Epiphany",
+		ua:                 "Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.0 Safari/605.1.15 Ubuntu/16.04 (3.18.11-0ubuntu1) Epiphany/3.18.11",
+		isMobile:           false,
+		isTablet:           false,
+		isBot:              false,
+		isSearchEngine:     false,
+		deviceID:           "",
+		deviceName:         "",
+		platformID:         "linux",
+		platformName:       "Generic Linux",
+		platformVersion:    "",
+		browserID:          "epiphany",
+		browserName:        "Epiphany",
+		browserFullVersion: "3.18.11",
+		browserVersion:     "3",
+	},
 	// others
 	{
 		desc:  "empty",
@@ -870,49 +888,23 @@ var cases = []struct {
 
 func TestParse(t *testing.T) {
 	for _, tc := range cases {
-		ua := useragent.New(tc.ua)
-		if ua == nil {
-			t.Fatal("nil got.")
-		}
-		if ua.IsMobile() != tc.isMobile {
-			t.Fatalf("[%s] isMobile: %t got, %t expected.", tc.desc, ua.IsMobile(), tc.isMobile)
-		}
-		if ua.IsTablet() != tc.isTablet {
-			t.Fatalf("[%s] isTablet: %t got, %t expected.", tc.desc, ua.IsTablet(), tc.isTablet)
-		}
-		if ua.IsBot() != tc.isBot {
-			t.Fatalf("[%s] isBot: %t got, %t expected.", tc.desc, ua.IsBot(), tc.isBot)
-		}
-		if ua.Bot.IsSearchEngine() != tc.isSearchEngine {
-			t.Fatalf("[%s] bot.is_search_engine: %t got, %t expected.", tc.desc, ua.Bot.IsSearchEngine(), tc.isSearchEngine)
-		}
-		if ua.Device.ID() != tc.deviceID {
-			t.Fatalf("[%s] decice.id: %q got, %q expected.", tc.desc, ua.Device.ID(), tc.deviceID)
-		}
-		if ua.Device.Name() != tc.deviceName {
-			t.Fatalf("[%s] decice.name: %q got, %q expected.", tc.desc, ua.Device.Name(), tc.deviceName)
-		}
-		if ua.Platform.ID() != tc.platformID {
-			t.Fatalf("[%s] platform.id: %q got, %q expected.", tc.desc, ua.Platform.ID(), tc.platformID)
-		}
-		if ua.Platform.Name() != tc.platformName {
-			t.Fatalf("[%s] platform.name: %q got, %q expected.", tc.desc, ua.Platform.Name(), tc.platformName)
-		}
-		if ua.Platform.Version() != tc.platformVersion {
-			t.Fatalf("[%s] platform.version: %q got, %q expected.", tc.desc, ua.Platform.Version(), tc.platformVersion)
-		}
-		if ua.Browser.ID() != tc.browserID {
-			t.Fatalf("[%s] browser.id: %q got, %q expected.", tc.desc, ua.Browser.ID(), tc.browserID)
-		}
-		if ua.Name() != tc.browserName {
-			t.Fatalf("[%s] browser.name: %q got, %q expected.", tc.desc, ua.Browser.Name(), tc.browserName)
-		}
-		if ua.FullVersion() != tc.browserFullVersion {
-			t.Fatalf("[%s] browser.full_version: %q got, %q expected.", tc.desc, ua.Browser.FullVersion(), tc.browserFullVersion)
-		}
-		if ua.Version() != tc.browserVersion {
-			t.Fatalf("[%s] browser.version: %q got, %q expected.", tc.desc, ua.Browser.Version(), tc.browserVersion)
-		}
+		t.Run(tc.desc, func(t *testing.T) {
+			ua := useragent.New(tc.ua)
+			assert.NotNil(t, ua)
+			assert.Equal(t, tc.isMobile, ua.IsMobile())
+			assert.Equal(t, tc.isTablet, ua.IsTablet())
+			assert.Equal(t, tc.isBot, ua.Bot.IsBot())
+			assert.Equal(t, tc.isSearchEngine, ua.Bot.IsSearchEngine())
+			assert.Equal(t, tc.deviceID, ua.Device.ID())
+			assert.Equal(t, tc.deviceName, ua.Device.Name())
+			assert.Equal(t, tc.platformID, ua.Platform.ID())
+			assert.Equal(t, tc.platformName, ua.Platform.Name())
+			assert.Equal(t, tc.platformVersion, ua.Platform.Version())
+			assert.Equal(t, tc.browserID, ua.Browser.ID())
+			assert.Equal(t, tc.browserName, ua.Name())
+			assert.Equal(t, tc.browserFullVersion, ua.FullVersion())
+			assert.Equal(t, tc.browserVersion, ua.Version())
+		})
 	}
 }
 
