@@ -35,6 +35,7 @@ func Parse(ua string) Browser {
 func matchers(ua string) []base {
 	c := &core{UA: ua}
 	return []base{
+		epiphany{c},
 		firefox{c},
 		edge{c},
 		uCBrowser{c},
