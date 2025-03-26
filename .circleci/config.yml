@@ -11,14 +11,12 @@ executors:
   golang_1_22_4:
     docker:
       - image: cimg/go:1.22.4
-    working_directory: /go/src/github.com/pattfy/useragent
     environment:
       GO111MODULE: 'on'
       CGO_ENABLED: '0'
   golang_1_23_1:
     docker:
       - image: cimg/go:1.23.1
-    working_directory: /go/src/github.com/pattfy/useragent
     environment:
       GO111MODULE: 'on'
       CGO_ENABLED: '0'
