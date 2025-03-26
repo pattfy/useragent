@@ -4,20 +4,20 @@ workflows:
   version: 2.1
   test:
     jobs:
-      - build_1_22_4
-      - build_1_23_1
+      - build_1_12_6
+      - build_1_13_1
 
 executors:
-  golang_1_22_4:
+  golang_1_12_6:
     docker:
-      - image: circleci/golang:1.22.4
+      - image: circleci/golang:1.12.6
     working_directory: /go/src/github.com/pattfy/useragent
     environment:
       GO111MODULE: 'on'
       CGO_ENABLED: '0'
-  golang_1_23_1:
+  golang_1_13_1:
     docker:
-      - image: circleci/golang:1.23.1
+      - image: circleci/golang:1.13.1
     working_directory: /go/src/github.com/pattfy/useragent
     environment:
       GO111MODULE: 'on'
@@ -35,17 +35,18 @@ commands:
       - run: go test -cover -v ./...
 
 jobs:
-  build_1_22_4:
-    executor: golang_1_22_4
+  build_1_12_6:
+    executor: golang_1_12_6
     steps:
       - checkout
       - install_tools
       - test_code
       - check_format
-  build_1_23_1:
-    executor: golang_1_23_1
+  build_1_13_1:
+    executor: golang_1_13_1
     steps:
       - checkout
       - install_tools
       - test_code
       - check_format
+
