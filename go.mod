@@ -1,3 +1,7 @@
+module github.com/pattfy/useragent
+
+go 1.22.4
+
 require (
 	github.com/jessevdk/go-assets v0.0.0-20160921144138-4f4301a06e15
 	github.com/stretchr/testify v1.10.0
@@ -9,7 +13,3 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-module github.com/pattfy/useragent
-
-go 1.22.4
